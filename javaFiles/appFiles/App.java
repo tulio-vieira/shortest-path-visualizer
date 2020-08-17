@@ -1,7 +1,10 @@
 package appFiles;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Locale;
 
 public class App extends JFrame {
@@ -11,14 +14,21 @@ public class App extends JFrame {
 	private static final long serialVersionUID = -3490590247647407489L;
  	private DotsPanel dotsPanel;
  	public Menu menu;
+ 	private BufferedImage icon;
  	
 	public static void main(String[] args) {
-		Locale.setDefault(Locale.US);
-		@SuppressWarnings("unused")
-		App myApp= new App();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	Locale.setDefault(Locale.US);
+        		@SuppressWarnings("unused")
+        		App myApp= new App();
+            }
+        });
 	}
  	
 	App() {
+		loadImage("/imgs/icon_1-small.png");
+		setIconImage(icon);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Shortest Path Visualizer");
         
@@ -35,5 +45,13 @@ public class App extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+	}
+
+	private void loadImage(String imgPath) {
+		try {
+			icon = ImageIO.read(getClass().getResource(imgPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
